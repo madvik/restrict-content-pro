@@ -734,12 +734,6 @@ class RCP_Member extends WP_User {
 
 		}
 
-		if( ! rcp_user_has_access( $this->ID, $access_level ) && $access_level > 0 ) {
-
-			$ret = false;
-
-		}
-
 		if ( ! empty( $subscription_levels ) ) {
 
 			if( is_string( $subscription_levels ) && $this->get_subscription_id() ) {
@@ -753,36 +747,30 @@ class RCP_Member extends WP_User {
 
 					case 'any-paid' :
 
-						$ret = rcp_is_active();
-
+						$ret = $this->is_active();
 						break;
 				}
 
 			} else {
 
-				if( user_can( $this->ID, 'manage_options' ) ) {
-
-					$ret = true;
-
-				} else if ( in_array( $this->get_subscription_id(), $subscription_levels ) ) {
+				if ( in_array( $this->get_subscription_id(), $subscription_levels ) ) {
 
 					$needs_paid = false;
 
 					foreach( $subscription_levels as $level ) {
-
-						$price      = rcp_get_subscription_price( $level );
-						$needs_paid = ! empty( $price );
-
+						$price = rcp_get_subscription_price( $level );
+						if ( ! empty( $price ) && $price > 0 ) {
+							$needs_paid = true;
+						}
 					}
 
-					if( $needs_paid ) {
+					if ( $needs_paid ) {
 
-						$ret = rcp_is_active();
+						$ret = $this->is_active();
 
 					} else {
 
 						$ret = true;
-
 					}
 
 				} else {
@@ -790,9 +778,17 @@ class RCP_Member extends WP_User {
 					$ret = false;
 
 				}
-
 			}
+		}
 
+		if ( ! rcp_user_has_access( $this->ID, $access_level ) && $access_level > 0 ) {
+
+			$ret = false;
+
+		}
+
+		if( user_can( $this->ID, 'manage_options' ) ) {
+			$ret = true;
 		}
 
 		return apply_filters( 'rcp_member_can_access', $ret, $this->ID, $post_id, $this );

@@ -26,7 +26,8 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 			'duration'      => 1,
 			'duration_unit' => 'month',
 			'level'         => 1,
-			'status'        => 'active'
+			'status'        => 'active',
+			'price'         => 10
 		) );
 
 		$this->level_id_2 = $levels->insert( array(
@@ -263,7 +264,6 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 		) );
 
 		update_post_meta( $post_id, 'rcp_subscription_level', array( $this->level_id, $this->level_id_2 ) );
-		update_post_meta( $post_id, '_is_paid', 1 );
 
 		$this->assertTrue( $this->member->can_access( $post_id ) );
 
