@@ -288,3 +288,125 @@ function rcp_email_payment_received( $payment_id, $args ) {
 	wp_mail( $user_info->user_email, $rcp_options['payment_received_subject'], $message, $headers );
 }
 add_action( 'rcp_insert_payment', 'rcp_email_payment_received', 10, 2 );
+
+
+/**
+ * Get a list of available email templates
+ *
+ * @since 2.7
+ * @return array
+ */
+function rcp_get_email_templates() {
+	$emails = new RCP_Emails;
+	return $emails->get_templates();
+}
+
+/**
+ * Get a formatted HTML list of all available tags
+ *
+ * @since 2.7
+ * @return string $list HTML formated list
+ */
+function rcp_get_emails_tags_list() {
+	// The list
+	$list = '';
+
+	// Get all tags
+	$emails = new RCP_Emails;
+	$email_tags = $emails->get_tags();
+
+	// Check
+	if( count( $email_tags ) > 0 ) {
+		foreach( $email_tags as $email_tag ) {
+			$list .= '{' . $email_tag['tag'] . '} - ' . $email_tag['description'] . '<br />';
+		}
+	}
+
+	// Return the list
+	return $list;
+}
+
+
+/**
+ * Email template tag: name
+ * The member's name
+ *
+ * @param int $member_id
+ * @return string name
+ */
+function rcp_email_tag_name( $member_id = 0 ) {
+	$member = new RCP_Member( $member_id );
+	return $member->first_name . ' ' . $member->last_name;
+}
+
+
+/**
+ * Email template tag: username
+ * The member's username on the site
+ *
+ * @param int $member_id
+ * @return string username
+ */
+function rcp_email_tag_user_name( $member_id = 0 ) {
+	$member = new RCP_Member( $member_id );
+	return $member->user_login;
+}
+
+
+/**
+ * Email template tag: user_email
+ * The member's email
+ *
+ * @param int $member_id
+ * @return string email
+ */
+function rcp_email_tag_user_email( $member_id = 0 ) {
+	$member = new RCP_Member( $member_id );
+	return $member->user_email;
+}
+
+/**
+ * Email template tag: login_url
+ * The member login URL
+ *
+ * @return string login_url
+ */
+function rcp_email_tag_login_url() {
+	// TODO
+	return esc_url(  );
+}
+
+
+/**
+ * Email template tag: amount
+ * The amount of an member transaction
+ *
+ * @return string amount
+ */
+function rcp_email_tag_amount( $member_id = 0, $payment ) {
+
+	// TODO
+
+	return html_entity_decode( rcp_currency_filter( $amount), ENT_COMPAT, 'UTF-8' );
+}
+
+
+/**
+ * Email template tag: sitename
+ * Your site name
+ *
+ * @return string sitename
+ */
+function rcp_email_tag_site_name() {
+	return wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
+}
+
+/**
+ * Email template tag: member ID
+ * member's ID
+ *
+ * @return int member ID
+ */
+function rcp_email_tag_member_id( $member_id = 0 ) {
+	return $member_id;
+}

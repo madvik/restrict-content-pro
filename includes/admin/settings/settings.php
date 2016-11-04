@@ -553,6 +553,20 @@ function rcp_settings_page() {
 							</tr>
 							<tr>
 								<th>
+									<label for="rcp_settings[email_template]"><?php _e( 'Template', 'rcp' ); ?></label>
+								</th>
+								<td>
+									<?php $emails = new RCP_Emails; $selected_template = isset( $rcp_options['email_template'] ) ? $rcp_options['email_template'] : ''; ?>
+									<select id="rcp_settings[email_template]" name="rcp_settings[email_template]">
+										<?php foreach( $emails->get_templates() as $id => $template ) : ?>
+											<option value="<?php echo esc_attr( $id ); ?>"<?php selected( $id, $selected_template ); ?>><?php echo $template; ?></option>
+										<?php endforeach; ?>
+									</select>
+									<p class="description"><?php _e( 'Select the template used for email design.', 'rcp' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th>
 									<label for="rcp_settings[from_name]"><?php _e( 'From Name', 'rcp' ); ?></label>
 								</th>
 								<td>
