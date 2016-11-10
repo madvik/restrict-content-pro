@@ -52,7 +52,7 @@ class RCP_EDD {
 	 */
 	public function file_download_has_access( $has_access, $payment_id, $args ) {
 
-		if ( ! $this->member->can_access( $args['download_id'] ) ) {
+		if ( ! $this->member->can_access( $args['download'] ) ) {
 			$has_access = false;
 		}
 
@@ -60,4 +60,12 @@ class RCP_EDD {
 	}
 }
 
-new RCP_EDD;
+
+function rcp_edd_init() {
+
+	if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+		return;
+	}
+	new RCP_EDD;
+}
+add_action( 'init', 'rcp_edd_init' );
