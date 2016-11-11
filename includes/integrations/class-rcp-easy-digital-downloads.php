@@ -12,6 +12,7 @@ class RCP_EDD {
 		add_filter( 'edd_can_purchase_download', array( $this, 'can_purchase' ), 10, 2 );
 		add_filter( 'edd_purchase_download_form', array( $this, 'download_form' ), 10, 2 );
 		add_filter( 'edd_file_download_has_access', array( $this, 'file_download_has_access' ), 10, 3 );
+		add_filter( 'edd_downloads_query', array( $this, 'edd_downloads_query' ), 10, 2 );
 	}
 
 	/**
@@ -57,6 +58,26 @@ class RCP_EDD {
 		}
 
 		return $has_access;
+	}
+
+	/**
+	 * Removes restricted downloads from the [downloads] shortcode query.
+	 *
+	 * @access public
+	 * @since 2.7
+	 */
+	public function edd_downloads_query( $query, $atts ) {
+
+		global $rcp_options;
+
+		if ( isset( $rcp_options['hide_premium'] ) && ! rcp_is_active( get_current_user_id() ) ) {
+			$premium_ids = rcp_get_paid_posts();
+			if ( ! empty( $premium_ids ) ) {
+				$query['post__not_in'] = $premium_ids;
+			}
+		}
+
+		return $query;
 	}
 }
 
