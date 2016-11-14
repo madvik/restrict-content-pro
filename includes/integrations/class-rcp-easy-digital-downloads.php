@@ -93,7 +93,7 @@ class RCP_EDD {
 
 		$post_id = get_the_ID();
 
-		if ( $this->member->can_access( $post_id ) ) {
+		if ( $this->member->can_access( $post_id ) || get_post_meta( $post_id, 'rcp_show_excerpt', true ) ) {
 			return $excerpt;
 		}
 
