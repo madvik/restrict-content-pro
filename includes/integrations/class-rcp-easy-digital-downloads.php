@@ -13,6 +13,7 @@ class RCP_EDD {
 		add_filter( 'edd_purchase_download_form', array( $this, 'download_form' ), 10, 2 );
 		add_filter( 'edd_file_download_has_access', array( $this, 'file_download_has_access' ), 10, 3 );
 		add_filter( 'edd_downloads_query', array( $this, 'edd_downloads_query' ), 10, 2 );
+		add_filter( 'edd_downloads_excerpt', array( $this, 'edd_downloads_excerpt' ) );
 	}
 
 	/**
@@ -78,6 +79,35 @@ class RCP_EDD {
 		}
 
 		return $query;
+	}
+
+	/**
+	 * Filters the excerpt in the [downloads] shortcode if the member doesn't have access.
+	 *
+	 * @access public
+	 * @since 2.7
+	 */
+	public function edd_downloads_excerpt( $excerpt ) {
+
+		global $rcp_options;
+
+		$post_id = get_the_ID();
+
+		if ( $this->member->can_access( $post_id ) ) {
+			return $excerpt;
+		}
+
+		if ( rcp_is_paid_content( $post_id ) ) {
+			$excerpt = ! empty( $rcp_options['paid_message'] ) ? $rcp_options['paid_message'] : false;
+		} else {
+			$excerpt = ! empty( $rcp_options['free_message'] ) ? $rcp_options['free_message'] : false;
+		}
+
+		if( empty( $excerpt ) ) {
+			$excerpt = __( 'This content is restricted to subscribers', 'rcp' );
+		}
+
+		return $excerpt;
 	}
 }
 
