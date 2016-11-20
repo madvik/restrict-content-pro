@@ -16,8 +16,8 @@ if ( ! rcp_is_registration() ) {
 		</tr>
 
 		<tr>
-			<td><?php echo rcp_get_subscription_name( rcp_get_registration()->get_subscription() ); ?></td>
-			<td><?php echo ( rcp_get_subscription_price( rcp_get_registration()->get_subscription() ) > 0 ) ? rcp_currency_filter( number_format( rcp_get_subscription_price( rcp_get_registration()->get_subscription() ), rcp_currency_decimal_filter() ) ) : __( 'free', 'rcp' ); ?></td>
+			<td data-th="<?php esc_attr_e( 'Subscription', 'rcp' ); ?>"><?php echo rcp_get_subscription_name( rcp_get_registration()->get_subscription() ); ?></td>
+			<td data-th="<?php esc_attr_e( 'Amount', 'rcp' ); ?>"><?php echo ( rcp_get_subscription_price( rcp_get_registration()->get_subscription() ) > 0 ) ? rcp_currency_filter( number_format( rcp_get_subscription_price( rcp_get_registration()->get_subscription() ), rcp_currency_decimal_filter() ) ) : __( 'free', 'rcp' ); ?></td>
 		</tr>
 
 		<?php if ( rcp_get_subscription_price( rcp_get_registration()->get_subscription() ) ) : ?>
@@ -66,10 +66,11 @@ if ( ! rcp_is_registration() ) {
 			}
 			?>
 			<tr class="rcp-recurring-total">
-				<th><?php echo $label; ?></th>
-				<th><?php rcp_registration_recurring_total(); ?></th>
+				<th data-th="<?php esc_attr_e( 'Total Today', 'rcp' ); ?>"><?php echo $label; ?></th>
+				<th data-th="<?php esc_attr_e(rcp_registration_total()); ?>"><?php rcp_registration_recurring_total(); ?></th>
 			</tr>
 		<?php endif; ?>
 
 	</tbody>
 </table>
+0
