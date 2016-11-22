@@ -162,4 +162,7 @@ p.rcp_success {
 		height:100%;
 		line-height: 100%;
  	}
+	.rcp-table td:first-child {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
  }
