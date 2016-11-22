@@ -147,6 +147,7 @@ p.rcp_success {
 	#content .rcp-table tr td{
 	  display: block;
 	  text-align: left;
+	  padding-left: 50%;
 	}
 	.rcp-table td:first-child {
 	  padding-top: .5em;
@@ -157,10 +158,11 @@ p.rcp_success {
 	.rcp-table td:before {
 		content: attr(data-th) ": ";
 		font-weight: bold;
-		width: 6.5em;
 		display: inline-block;
 		height:100%;
 		line-height: 100%;
+		width: 100%;
+		margin-left: -100%;
  	}
 	.rcp-table td:first-child {
 		background-color: rgba(0, 0, 0, 0.1);
