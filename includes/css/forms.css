@@ -133,27 +133,24 @@ p.rcp_success {
 .rcp_current_cards_fieldset span {
     display: block;
 }
-/*
-* RCP-Table for or small screen
-*/
+/* RCP-Table for or small screen */
 @media only screen and (max-width: 480px) {
 	.rcp-table{
-	 overflow: hidden;
+		overflow: hidden;
 	}
-
 	.rcp-table th {
-	  display: none;
+		display: none;
 	}
 	#content .rcp-table tr td{
-	  display: block;
-	  text-align: left;
-	  padding-left: 50%;
+		display: block;
+		text-align: left;
+		padding-left: 50%;
 	}
 	.rcp-table td:first-child {
-	  padding-top: .5em;
+		padding-top: .5em;
 	}
 	.rcp-table td:last-child {
-	  padding-bottom: .5em;
+		padding-bottom: .5em;
 	}
 	.rcp-table td:before {
 		content: attr(data-th) ": ";
@@ -163,7 +160,7 @@ p.rcp_success {
 		line-height: 100%;
 		width: 100%;
 		margin-left: -100%;
- 	}
+	}
 	.rcp-table td:first-child {
 		background-color: rgba(0, 0, 0, 0.1);
 	}
