@@ -296,6 +296,21 @@ function rcp_is_expired( $user_id = 0 ) {
 }
 
 /*
+* Checks whether a user is cancelled
+* @param int $user_id - the ID of the user to return the subscription level of
+* return bool - TRUE if the user is cancelled, false otherwise
+*/
+function rcp_is_cancelled( $user_id = 0 ) {
+
+	if( empty( $user_id ) && is_user_logged_in() ) {
+		$user_id = get_current_user_id();
+	}
+
+	$member = new RCP_Member( $user_id );
+	return $member->get_status() == 'cancelled';
+}
+
+/*
 * Checks whether a user has an active subscription
 * @param int $user_id - the ID of the user to return the subscription level of
 * return bool - TRUE if the user has an active, paid subscription (or is trialing), false otherwise
